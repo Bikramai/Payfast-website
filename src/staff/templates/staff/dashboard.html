@@ -1,0 +1,30 @@
+{% extends 'staff/base.html' %}
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card" style="">
+                <div class="border-bottom card-body">
+                    <p class="card-title mb-0">Transaction ID Search</p>
+                    <p class="card-title-desc mb-0">
+                        Please enter a transaction id provided by client to cash withdraw
+                    </p>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'staff:order-search' %}">
+                         {% csrf_token %}
+                        <input class="form-control form-control-lg mb-3" id="order_id" name="order_id" placeholder="5725-25726-67282-26727">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block subtitle %}Order Details {% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <p><a href="{% url 'customer:order-list' %}"><i class="fa fa-arrow-left"></i> Go Back</a></p>
+        </div>
+    </div>
+
+    <div class="row text-center mb-4">
+        <div class="col-sm-12">
+            <p class="mb-0">Transaction Key</p>
+            <h1>{{ object.transaction_id }}</h1>
+            <h4>
+                <b>Order is: {{ object.get_status_display }}</b>
+                {#                |<a href="{% url 'customer:order-invoice' object.pk %}"><i class="fa fa-receipt"></i> Print Receipt</a>#}
+            </h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div class="card">
+                <div class="card-body border-bottom">
+                    <p class="my-0 card-title">Gift Order Information</p>
+                </div>
+                <div class="card-body">
+
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="avatar-sm mb-4">
+                            <span class="avatar-title rounded-circle bg-soft-dark font-size-18">
+                                <i class="fa fa-money-bill text-dark"></i>
+                            </span>
+                            </div>
+                            <p class="mb-0 small">Total Amount</p>
+                            <p class="h2 mb-0">${{ object.payable_amount }}</p>
+                        </div>
+                        <div class="col">
+                            <div class="avatar-sm mb-4">
+                            <span class="avatar-title rounded-circle bg-soft-danger font-size-18">
+                                <i class="fa fa-coins text-danger"></i>
+                            </span>
+                            </div>
+                            <p class="mb-0 small text-danger">Tax + Service</p>
+                            <p class="h2 mb-0 text-danger">${{ object.tax_charges }} + ${{ object.fees_charges }}</p>
+                        </div>
+                        <div class="col">
+                            <div class="avatar-sm mb-4">
+                            <span class="avatar-title rounded-circle bg-soft-dark font-size-18">
+                                <i class="fa fa-hands-helping text-dark"></i>
+                            </span>
+                            </div>
+                            <p class="mb-0 small">Received Amount</p>
+                            <p class="h2 mb-0">${{ object.total_amount }}</p>
+                        </div>
+                        {% if object.gift_card %}
+                            <div class="col">
+                                <div class="avatar-sm mb-4">
+                                       <span class="avatar-title rounded-circle bg-soft-dark font-size-18">
+                                           <i class="fa fa-gift text-success"></i>
+                                       </span>
+                                </div>
+                                <p class="mb-0 small">Package</p>
+                                <p class="h2 mb-0">{{ object.gift_card.name }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body border-top">
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-0"><b><i class="fa fa-calendar"></i> Created On</b></p>
+                            <p class="mb-0">{{ object.created_on }}</p>
+                        </div>
+                        {% if object.closed_at %}
+                            <div class="col text-right">
+                                <p class="mb-0"><b><i class="fa fa-calendar"></i> Closed On</b></p>
+                                <p class="mb-0">{{ object.closed_at }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4">
+
+            <div class="card">
+                <div class="card-body border-bottom">
+                    <p class="my-0 card-title">Receiver</p>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="rounded-circle avatar-xl" alt="200x200"
+                             src="{% static 'core/no-user.png' %}"
+                             data-holder-rendered="true">
+
+                        <hr>
+                        <p class="h3 mb-0 mt-2">
+                            {{ object.receiver_first_name }}
+                            {{ object.receiver_last_name }}
+                        </p>
+                        <p class="mb-0">
+                            <b>
+                                <a href="mailto:{{ object.receiver_email }}">
+                                    <i class="mdi mdi-mail"></i> {{ object.receiver_email }}
+                                </a>
+                            </b>
+                        </p>
+                        <p class="mb-0">
+                            <b>
+                                <a href="callto:{{ object.receiver_phone_number }}">
+                                    <i class="fa fa-phone"></i> {{ object.receiver_phone_number }}
+                                </a>
+                            </b>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js_code %}
+    <script>
+        function copy_code() {
+            var copyText = document.getElementById("qr-code");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+{% endblock %}

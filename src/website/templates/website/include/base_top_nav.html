@@ -1,0 +1,46 @@
+{% load static %}
+
+<header id="header" class="bg-transparent header-text-light">
+    <div class="container">
+      <div class="header-row">
+        <div class="header-column justify-content-start">
+          <!-- Logo
+          ============================= -->
+          <div class="logo me-3"> <a class="d-flex" href="/" title="logo">
+              <img src="{% static 'core/logo-long.png' %}" alt="logo" height="25"></a>
+          </div>
+          <!-- Logo end -->
+          <!-- Collapse Button
+          ============================== -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-nav"> <span></span> <span></span> <span></span> </button>
+          <!-- Collapse Button end -->
+
+          <!-- Primary Navigation
+          ============================== -->
+          <nav class="primary-menu navbar navbar-expand-lg">
+            <div id="header-nav" class="collapse navbar-collapse">
+              <ul class="navbar-nav me-auto">
+                <li><a href="{% url 'website:home' %}"></a></li>
+                <li><a href="{% url 'website:home' %}#gifts">Gifts</a></li>
+                <li><a href="{% url 'website:home' %}#work">Work</a></li>
+                <li><a href="{% url 'website:home' %}#services">Services</a></li>
+                <li><a href="{% url 'website:home' %}#faq">FAQ's</a></li>
+              </ul>
+            </div>
+          </nav>
+          <!-- Primary Navigation end -->
+        </div>
+        <div class="header-column justify-content-end">
+          <!-- Login & Signup Link
+          ============================== -->
+          <nav class="login-signup navbar navbar-expand">
+            <ul class="navbar-nav">
+              <li><a href="{% url 'account_login' %}">Login</a> </li>
+              <li class="align-items-center h-auto ms-sm-3"><a class="btn btn-primary" href="{% url 'account_signup' %}">Sign Up</a></li>
+            </ul>
+          </nav>
+          <!-- Login & Signup Link end -->
+        </div>
+      </div>
+    </div>
+  </header>
